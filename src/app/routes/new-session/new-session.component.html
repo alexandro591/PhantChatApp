@@ -1,0 +1,18 @@
+<div class="overlay" *ngIf="creatingSession">
+  <mat-spinner></mat-spinner>
+</div>
+<form class="visitor">
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input name="name" matInput [(ngModel)]="visitor.name" required />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input name="email" matInput [(ngModel)]="visitor.email" required />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Phone</mat-label>
+    <input name="phone" matInput [(ngModel)]="visitor.phone" required />
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="startChat()">Start</button>
+</form>

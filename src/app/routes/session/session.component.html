@@ -1,0 +1,10 @@
+<div class="overlay" *ngIf="!sessionService.initialized">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="chatArea">
+  <app-chat-messages></app-chat-messages>
+  <form action="">
+    <app-chat-input></app-chat-input>
+    <app-chat-controls></app-chat-controls>
+  </form>
+</div>

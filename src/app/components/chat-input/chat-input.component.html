@@ -1,0 +1,10 @@
+<mat-form-field appearance="fill">
+  <textarea
+    matInput
+    placeholder="Type a message..."
+    [matTextareaAutosize]="true"
+    [matAutosizeMinRows]="1"
+    [matAutosizeMaxRows]="5"
+    [(ngModel)]="messagesService.currentMessage"
+  ></textarea>
+</mat-form-field>
