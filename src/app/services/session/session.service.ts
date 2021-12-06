@@ -3,7 +3,6 @@ import { FirebaseService } from '../firebase/firebase.service';
 import { ref, set, get, onChildAdded, update } from 'firebase/database';
 import { uuid4 } from '../../../functions/uuid';
 import { MessagesService } from '../messages/messages.service';
-import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
