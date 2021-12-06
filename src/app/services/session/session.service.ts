@@ -28,16 +28,17 @@ export class SessionService {
     this.uuid = uuid4();
     this.firebaseService.dbInit({});
 
-    const sessionRef = ref(
-      this.firebaseService.db,
-      `/sessions/${this.site}/${this.uuid}`
-    );
+    const sessionRef = ref(this.firebaseService.db, `/sessions/${this.uuid}`);
 
     let creatingSession = true;
 
     do {
       try {
-        await set(sessionRef, { visitor: this.visitor });
+        await set(sessionRef, {
+          visitor: this.visitor,
+          site: this.site,
+          completed: false,
+        });
         creatingSession = false;
       } catch (error) {
         creatingSession = true;
@@ -53,12 +54,12 @@ export class SessionService {
 
     this.sessionVisitorRef = ref(
       this.firebaseService.db,
-      `/sessions/${this.site}/${this.uuid}/visitor`
+      `/sessions/${this.uuid}/visitor`
     );
 
     this.messagesRef = ref(
       this.firebaseService.db,
-      `/sessions/${this.site}/${this.uuid}/messages`
+      `/sessions/${this.uuid}/messages`
     );
 
     onChildAdded(this.messagesRef, (messageSnapshot: any) => {
