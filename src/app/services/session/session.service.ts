@@ -40,6 +40,7 @@ export class SessionService {
           site: this.site,
           completed: false,
           createdAt: new Date().toISOString(),
+          lastUpdated: new Date().toISOString(),
         });
         creatingSession = false;
       } catch (error) {
