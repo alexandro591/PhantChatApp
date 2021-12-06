@@ -91,12 +91,12 @@ export class SessionService {
     return;
   }
 
-  async newMessageHandler(message: any) {
+  newMessageHandler(message: any) {
     this.messagesService.addMessage(message.val());
     this.messagesService.currentMessage = '';
   }
 
-  async sendMessage() {
+  sendMessage() {
     const messageText = this.messagesService.currentMessage.trim();
     const participantType = 'visitor';
     if (messageText) {
