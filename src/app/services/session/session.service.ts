@@ -15,6 +15,7 @@ export class SessionService {
   initialized: boolean = false;
   site: string = '';
   messagesRef: any;
+  sessionRef: any;
   sessionVisitorRef: any;
 
   constructor(
@@ -28,16 +29,17 @@ export class SessionService {
     this.uuid = uuid4();
     this.firebaseService.dbInit({});
 
-    const sessionRef = ref(this.firebaseService.db, `/sessions/${this.uuid}`);
+    this.sessionRef = ref(this.firebaseService.db, `/sessions/${this.uuid}`);
 
     let creatingSession = true;
 
     do {
       try {
-        await set(sessionRef, {
+        await set(this.sessionRef, {
           visitor: this.visitor,
           site: this.site,
           completed: false,
+          createdAt: new Date().toISOString(),
         });
         creatingSession = false;
       } catch (error) {
@@ -51,6 +53,8 @@ export class SessionService {
     this.site = site;
     this.uuid = uuid;
     this.firebaseService.dbInit({ dbId });
+
+    this.sessionRef = ref(this.firebaseService.db, `/sessions/${this.uuid}`);
 
     this.sessionVisitorRef = ref(
       this.firebaseService.db,
@@ -93,10 +97,8 @@ export class SessionService {
 
   async sendMessage() {
     const messageText = this.messagesService.currentMessage.trim();
-    const participantType = environment.debug
-      ? ['visitor', 'operator'][Math.floor(Math.random() * 2)]
-      : 'visitor';
-    if (messageText)
+    const participantType = 'visitor';
+    if (messageText) {
       update(this.messagesRef, {
         [uuid4()]: {
           text: messageText,
@@ -107,5 +109,9 @@ export class SessionService {
           },
         },
       });
+      update(this.sessionRef, {
+        lastUpdated: new Date().toISOString(),
+      });
+    }
   }
 }
